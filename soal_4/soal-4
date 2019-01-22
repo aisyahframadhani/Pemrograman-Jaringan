@@ -1,0 +1,14 @@
+Struct
+Membuat struct person
+Dengan type data nama adalah string dan umur bertype data integer 
+Print nama 
+Print umur
+Print umur
+
+
+Method 
+Membuat struct rect
+Membuat function area bertype data integer
+Membuat function perim bertype data integer
+Print area 
+Print perim 
