@@ -1,0 +1,14 @@
+Multiple return
+Membuat function vals() dengan type data integer
+a, b di assign pada fungsi vals()
+Print nilai a 
+Print nilai b 
+_,  C di assign pada fungsi vals()
+Print c 
+
+
+Command line 
+Assign wordPtr dengan flag.String, numbPtr dengan flag.numb, boolPtr dengan flag.Bool 
+Print word dari wordPtr, numb dari numbPtr, fork dari boolPtr
+Print svar
+Print tail 
