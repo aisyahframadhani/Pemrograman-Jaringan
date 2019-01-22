@@ -1,0 +1,10 @@
+For 
+Print bilangan bulat dari 1 sampai 3
+Print bilangan bulat dari 7 sampai 9
+Print loop 
+Print bilangan ganjil
+
+If/else
+bilangan 7 tidak habis dibagi 2, maka bilangan 7 adalah bilangan ganjil
+bilangan 8 habis dibagi 4, dengan rumus 8 % 4 == 0
+bilangan 9 merupakan 1 digit karena kurang dari 10
