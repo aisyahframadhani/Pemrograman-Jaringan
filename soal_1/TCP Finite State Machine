@@ -1,0 +1,18 @@
+Hal pertama yang perlu diperhatikan dalam diagram ini adalah bahwa bagian dari transisi negara adalah tipikal. Kami telah menandai transisi klien normal dengan panah solid hijau, dan transisi server normal dengan panah putus-putus merah. Transisi lain tentu saja valid, tetapi biasanya tidak diharapkan.
+
+Dua transisi yang mengarah ke keadaan CONNECTION ESTABLISHED berhubungan dengan pembukaan koneksi, dan dua transisi yang mengarah dari state CONNECTION ESTABLISHED adalah untuk penghentian koneksi. Kondisi CONNECTION ESTABLISHED adalah tempat transfer data dapat terjadi di antara kedua ujung di kedua arah.
+
+Kami telah mengumpulkan empat kotak di kiri bawah diagram ini dalam kotak putus-putus dan memberi labelnya TUTUP aktif. Dua kotak lain (CLOSE_WAIT dan LAST_ACK) dikumpulkan dalam kotak putus-putus dengan label pasif TUTUP.
+
+Ketika OPEN pasif dikeluarkan oleh titik akhir, itu masuk ke negara LISTEN. Ini terjadi setiap kali server memulai proses daemon yang diharapkan untuk menunggu permintaan TCP yang masuk. Ketika TCP menerima flag SYN dalam status ini, ia akan memasuki proses jabat tangan 3-arah untuk pindah ke keadaan CONNECTION ESTABLISHED.
+
+OPEN aktif biasanya dikeluarkan oleh klien untuk memulai transaksi TCP dengan server yang diberikan. Mengikuti jalur hijau, seseorang dapat dengan jelas melihat jabat tangan 3 arah yang mengarah juga ke kondisi CONNECTION ESTABLISHED.
+
+Status TIME_WAIT juga disebut status tunggu 2MSL. Setiap implementasi harus memilih nilai untuk seumur hidup segmen maksimum (MSL).
+Ini adalah jumlah waktu maksimum yang bisa dimiliki segmen mana saja di jaringan sebelum dibuang. Kita tahu batas waktu ini dibatasi, karena segmen TCP ditransmisikan sebagai datagram IP, dan datagram IP memiliki bidang TTL yang membatasi masa pakainya. RFC 793 [Postel 1981c] menetapkan MSL sebagai 2 menit. Nilai implementasi umum, bagaimanapun, adalah 30 detik, 1 menit, atau 2 menit.
+
+Dengan nilai MSL untuk implementasi, aturannya adalah: ketika TCP melakukan penutupan aktif, dan mengirimkan ACK akhir, koneksi itu harus tetap dalam status TIME_WAIT untuk dua kali MSL. Ini memungkinkan TCP mengirim ulang ACK final jika ACK ini hilang (dalam hal ini ujung lainnya akan kehabisan waktu dan mentransmisikan ulang FIN finalnya).
+
+Efek lain dari penantian 2MSL ini adalah ketika koneksi TCP ada dalam penantian 2MSL, pasangan soket menentukan bahwa koneksi (alamat IP klien, nomor port klien, alamat IP server, dan nomor port server) tidak dapat digunakan kembali. Koneksi itu hanya dapat digunakan kembali ketika menunggu 2MSL selesai.
+
+Setiap segmen yang tertunda yang tiba untuk koneksi saat menunggu 2MSL dibuang. Karena koneksi yang ditentukan oleh pasangan soket dalam menunggu 2MSL tidak dapat digunakan kembali selama periode waktu ini, ketika kami membuat koneksi yang valid, kami tahu bahwa segmen yang tertunda dari inkarnasi sebelumnya dari koneksi ini tidak dapat disalahartikan sebagai bagian dari koneksi baru. (Koneksi ditentukan oleh pasangan soket. Contoh baru koneksi disebut inkarnasi dari koneksi itu.)
